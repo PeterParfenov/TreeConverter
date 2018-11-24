@@ -30,18 +30,6 @@ set(CMAKE_C_FLAGS "-O2")
 add_subdirectory(Utility)
 add_subdirectory(Event)
 
-# #---Generate dictionary for DataReader
-# ROOT_GENERATE_DICTIONARY(G__DataReader
-#   DataReader.h
-# LINKDEF DataReader.LinkDef.h)
-
-# #---Create a shared library with geneated dictionary for DataReader class
-# add_library(DataReader SHARED
-#   DataReader.cxx
-# G__DataReader.cxx)
-
-# target_link_libraries(DataReader Plotter Converters ${ROOT_LIBRARIES})
-
-# #---Create  a main program using the library
-# add_executable(Main DataReaderMain.cxx)
-# target_link_libraries(Main DataReader)
+#---Create  a main program using the library
+add_executable(Main TCMain.cpp ${INCLUDE_DIRECTORIES})
+target_link_libraries(Main TCEvent ${ROOT_LIBRARIES})

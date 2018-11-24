@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "TCParticle.h"
 #include "TMath.h"
 #include "TCConstants.h"
@@ -6,6 +8,7 @@ ClassImp(TCParticle);
 
 TCParticle::TCParticle()
     : TObject(),
+      fIndex(0),
       fPdg(0),
       fPx(0.),
       fPy(0.),
@@ -15,6 +18,38 @@ TCParticle::TCParticle()
       fY(0.),
       fZ(0.),
       fT(0.)
+{
+}
+
+TCParticle::TCParticle(Int_t index, Int_t pdg,
+                       Double_t px, Double_t py, Double_t pz, Double_t E,
+                       Double_t x, Double_t y, Double_t z, Double_t t)
+    : TObject(),
+      fIndex(index),
+      fPdg(pdg),
+      fPx(px),
+      fPy(py),
+      fPz(pz),
+      fE(E),
+      fX(x),
+      fY(y),
+      fZ(z),
+      fT(t)
+{
+}
+
+TCParticle::TCParticle(const TCParticle &_p)
+    : TObject(_p),
+      fIndex(_p.fIndex),
+      fPdg(_p.fPdg),
+      fPx(_p.fPx),
+      fPy(_p.fPy),
+      fPz(_p.fPz),
+      fE(_p.fE),
+      fX(_p.fX),
+      fY(_p.fY),
+      fZ(_p.fZ),
+      fT(_p.fT)
 {
 }
 
@@ -56,4 +91,17 @@ Bool_t TCParticle::operator==(const TCParticle &_p) const
            (TMath::Abs(fZ) < TCConstants::GetDoubleZero() && TMath::Abs(_p.fZ) < TCConstants::GetDoubleZero())) &&
           ((TMath::Abs((fT - _p.fT) / fT) < TCConstants::GetDoubleComparisonPrecision()) ||
            (TMath::Abs(fT) < TCConstants::GetDoubleZero() && TMath::Abs(_p.fT) < TCConstants::GetDoubleZero())));
+}
+
+void TCParticle::Print(Option_t *) const
+{
+  std::cout << "------------------------------------------------" << std::endl
+            << "-I-               TCParticle                 -I-" << std::endl
+            << "Index                         : " << fIndex << std::endl
+            << "PDG code                      : " << fPdg << std::endl
+            << "Momentum {px, py, pz} (GeV/c) : {" << fPx << ", " << fPy << ", " << fPz << "}" << std::endl
+            << "Energy (GeV)                  : " << fE << std::endl
+            << "Position {x, y, z} (fm)       : {" << fX << ", " << fY << ", " << fZ << "}" << std::endl
+            << "Creation time (fm/c)          : " << fT << std::endl
+            << "------------------------------------------------" << std::endl;
 }
